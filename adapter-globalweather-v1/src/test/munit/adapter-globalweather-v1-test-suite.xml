@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:munit="http://www.mulesoft.org/schema/mule/munit" xmlns:munit-tools="http://www.mulesoft.org/schema/mule/munit-tools"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xsi:schemaLocation="
+		http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+		http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd
+		http://www.mulesoft.org/schema/mule/munit-tools  http://www.mulesoft.org/schema/mule/munit-tools/current/mule-munit-tools.xsd">
+	<munit:config name="adapter-globalweather-v1-test-suite.xml" />
+	<munit:test name="adapter-globalweather-v1-test-suite-adapter-globalweather-v1FlowTest" doc:id="4c510a9f-ba86-4382-8cd8-7e8c0a14c3bb" description="Test">
+		<munit:behavior>
+			<munit-tools:mock-when doc:name="Mock when" doc:id="f11f316c-ecb4-4cd1-9dd0-e1f84162477e" processor=".*:.*">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="request to call weather app" attributeName="doc:name" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:payload value="#[MunitTools::getResourceAsStream('mock-request/get-weatherdetails-response.json')]" mediaType="application/json" />
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to adapter-globalweather-v1Flow" doc:id="70d44e87-a3eb-42f4-bf34-6e4d2db6bc8a" name="get:weather:adapter-globalweather-v1"/>
+		</munit:execution>
+		<munit:validation>
+			<munit-tools:assert-that doc:name="Assert that" doc:id="01382207-cae4-40c6-b439-ca03c5789752" is="#[MunitTools::notNullValue()]" expression='#[%dw 2.0&#10;output application/json&#10;---&#10;payload]' message='"Payload is empty: Failure"'/>
+		</munit:validation>
+	</munit:test>
+	<munit:test name="adapter-globalweather-v1-test-suite-get:citiesbycountry:adapter-globalweather-v1Test" doc:id="2269aafd-c329-4788-b06c-0481aacc38eb" description="Test">
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock when" doc:id="3afc75b2-0ca7-4254-90ad-471a5f189f48" processor=".*:.*">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="request to call cities weather app" attributeName="doc:name" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:payload value="#[MunitTools::getResourceAsStream('mock-request/get-citiesbycountry-response.json')]" mediaType="application/json" />
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to get:citiesbycountry:adapter-globalweather-v1" doc:id="686eba60-cc56-4e21-ae89-369322b296c8" name="get:citiesbycountry:adapter-globalweather-v1"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert-that doc:name="Assert that" doc:id="631c1a76-c36d-4b0c-a82a-eb9fc38504bb" is="#[MunitTools::notNullValue()]" message='"payload is empty"' expression="#[%dw 2.0&#10;output application/json&#10;---&#10;payload]"/>
+		</munit:validation>
+	</munit:test>
+
+
+</mule>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:wsc="http://www.mulesoft.org/schema/mule/wsc" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/wsc http://www.mulesoft.org/schema/mule/wsc/current/mule-wsc.xsd">
+	<flow name="comman-get-citiesbycountry-weather-app-call" doc:id="c3901117-7baa-47a7-98ce-d8abfa90752a" >
+		<logger level="INFO" doc:name="Log start" doc:id="275fadad-ceef-4e04-aa6f-fdd59f915aac" message="call to weather app start"/>
+		<wsc:consume operation="GetCitiesByCountry" doc:name=" call-to-citiesbycountry-app" doc:id="35c4a6e8-69f3-4fc6-b57b-708635829ddd" config-ref="Weather_Service_Consumer_Config" />
+		<logger level="INFO" doc:name="Log end" doc:id="212ebb4c-684c-47f6-8515-d08c262b69b6" message="call to weather app end"/>
+	</flow>
+	<flow name="comman-get-weather-app-call" doc:id="90a2ab42-3a2b-4726-bdae-da03dbeea580" >
+		<logger level="INFO" doc:name="Log start" doc:id="feeb3860-66bb-4a9a-bd9c-5c36b4b8a203" message="call to weather app start" />
+		<wsc:consume operation="GetWeather" doc:name="call-to-getallweather-app" doc:id="f124ec19-8767-4e42-a902-249f4cce9c82" config-ref="Weather_Service_Consumer_Config" />
+		<logger level="INFO" doc:name="Log end" doc:id="0d81956f-c3e3-44a3-9865-ec97ed23fafa" message="call to weather app end" />
+	</flow>
+</mule>

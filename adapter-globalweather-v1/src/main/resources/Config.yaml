@@ -1,0 +1,7 @@
+http:
+  port : "8081"
+ 
+webservice:
+  wsdl: "C:\\M\\WorkSpace\\adapter-globalweather-v1\\src\\main\\resources\\wsdl.weather\\global-weather.wsdl"
+  service: "TicketServiceService"
+  port: "TicketServicePort" 

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:jms="http://www.mulesoft.org/schema/mule/jms"
+	xmlns:batch="http://www.mulesoft.org/schema/mule/batch"
+	xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:wsc="http://www.mulesoft.org/schema/mule/wsc" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/wsc http://www.mulesoft.org/schema/mule/wsc/current/mule-wsc.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/batch http://www.mulesoft.org/schema/mule/batch/current/mule-batch.xsd
+http://www.mulesoft.org/schema/mule/jms http://www.mulesoft.org/schema/mule/jms/current/mule-jms.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	
+	<flow name="get:weather:adapter-globalweather-v1" doc:id="c487a66c-11f7-491e-8df9-34dfb3b8c615" >
+		<http:listener doc:name="Listener" doc:id="4b1ecc14-1ade-4c57-98a4-15860b16bd38" config-ref="HTTP_Listener_weather_config" path="/getweather"/>
+		<ee:transform doc:name="Transform to weather request payload" doc:id="a502d572-6c52-40e8-8f9e-4434bab90d0e">
+			<ee:message>
+				<ee:set-payload><![CDATA[%dw 2.0
+output application/xml
+ns ns0 http://www.webserviceX.NET
+---
+{
+	ns0#GetWeatherSoapIn :
+	{
+		GetWeather: {
+		CityName : "Sydney",
+		CountryName: "Aus"
+}		
+		
+	}
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Log request" doc:id="9f2fb0a8-2429-4508-bd72-4351331d3fac" message="#[payload]"/>
+		<flow-ref doc:name="request to call weather app" doc:id="3160faf3-9fe6-4e86-bfdf-b58d506a3759" name="comman-get-weather-app-call"/>
+		<ee:transform doc:name="Transform to final response" doc:id="8dc4f79c-1c47-4c5a-9f93-0a1d2e45211a" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Log final response" doc:id="21926657-07db-459f-b41f-eab5edead852" message="#[payload]"/>
+	</flow>
+	<flow name="get:citiesbycountry:adapter-globalweather-v1" doc:id="bf132c9e-96bb-4ce6-8c8a-dc969d02ac16" >
+		<http:listener doc:name="Listener" doc:id="30f42b2a-3dd5-4082-9f56-3b3420ad390a" config-ref="HTTP_Listener_weather_config" path="/getcitiesbycountry"/>
+		<ee:transform doc:name="Transform to citiesbycountry request payload" doc:id="25815253-f7c7-4d24-9af1-067ff3192cc5" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/xml
+ns ns0 http://www.webserviceX.NET
+---
+{
+	ns0#GetWeatherSoapIn :
+	{
+		GetWeather: {
+			
+		CountryName: "Australia"
+}		
+		
+	}
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Log request" doc:id="ffdafbd0-9eb5-4c09-acf3-b2276c2e95a7" message="#[payload]"/>
+		<flow-ref doc:name="request to call cities weather app" doc:id="ee8c814a-bb7b-479f-9a2d-afbddbdfce14" name="comman-get-citiesbycountry-weather-app-call"/>
+		<logger level="INFO" doc:name="Logger" doc:id="b6adf1f2-76cd-43f3-af46-544efc4ba2b5" message="Log end***************************"/>
+		<ee:transform doc:name="Transform to citiesbycountry final response" doc:id="76dbc8b5-c821-4f21-90bb-bb068b40526f" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+	GetCitiesByCountryResult : "Sydney"
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Log final response" doc:id="2d932a18-5808-4a18-8a1d-a029fde47dac" message="#[payload]" />
+		<error-handler >
+			<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="7a0a88e1-0e68-4aab-bf67-bfe869c1fdf1" >
+				<ee:transform doc:name="Copy_of_Transform Message" doc:id="505321bf-7e37-445c-b376-ac00324300ff" >
+					<ee:message >
+						<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+	errormessage : error.errorMessage,
+	errorType : error.errorType
+}]]></ee:set-payload>
+					</ee:message>
+				</ee:transform>
+				<logger level="ERROR" doc:name="Logger" doc:id="2044408d-a64b-4d54-97cb-bbb9c1f4a469" message="#[payload]"/>
+			</on-error-propagate>
+		</error-handler>
+	</flow>
+</mule>
