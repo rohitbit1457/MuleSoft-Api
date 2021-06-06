@@ -1,0 +1,43 @@
+#%RAML 1.0
+title: Weather Adapter API
+version: v1
+protocols: [HTTPS]
+mediaType: [application/json]
+documentation:
+   - title: api-weather -poral-v1 API
+     content: Test
+
+traits:
+  Errorable: !include common/traits/errorable.raml
+
+
+### API definition ###
+/citiesbycountry:
+    get:
+      
+      description: Get city list based on country
+      queryParameters:
+         countryname:
+           required : true
+
+      responses:
+        200:
+          body:
+            application/vnd.api+json:
+              example: !include /examples/responses/get-citiesbycountry-response.json
+
+/weatherall:
+    get:
+      
+      description: Get city list based on country
+      queryParameters:
+         countryname:
+           required : true
+         city:
+          required: true  
+      
+      responses:
+        200:
+          body:
+            application/vnd.api+json:
+              example: !include /examples/responses/get-weatherdetails-response.json

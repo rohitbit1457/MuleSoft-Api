@@ -1,0 +1,10 @@
+{
+  "errors": [
+    {
+        "status": "500",
+        "code": "UNEXPECTED_ERROR",
+        "title": "An Unexpected Error Has Occurred",
+        "detail": "An unexpected error has occured for which no further information is available"
+    }
+  ]
+}

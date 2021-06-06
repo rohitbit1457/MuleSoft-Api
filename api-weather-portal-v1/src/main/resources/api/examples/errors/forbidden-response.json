@@ -1,0 +1,10 @@
+{
+  "errors": [
+    {
+        "status": "403",
+        "code": "FORBIDDEN",
+        "title": "User cannot access this resource.",
+        "detail": "User cannot access this resource"
+    }
+  ]
+}

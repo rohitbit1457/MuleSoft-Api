@@ -1,0 +1,10 @@
+{
+  "errors": [
+    {
+        "status": "401",
+        "code": "UNAUTHORISED",
+        "title": "Authorization Failed",
+        "detail": "User must include authorisation details for the request"
+    }
+  ]
+}

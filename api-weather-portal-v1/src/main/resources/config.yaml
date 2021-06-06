@@ -1,0 +1,6 @@
+http:
+  port : "8081"
+ 
+globalweatherprops:
+  host: "adapter-globalweather-v1.us-e2.cloudhub.io"
+  port: "8081"

@@ -1,0 +1,10 @@
+{
+  "errors": [
+    {
+        "status": "406",
+        "code": "NOT_ACCEPTABLE",
+        "title": "Not accepted",
+        "detail": "The provided http header: `Content-Type` does not match the response type"
+    }
+  ]
+}

@@ -1,0 +1,53 @@
+#%RAML 1.0 Trait
+description: Common error responses returned by an API
+usage: Applies to all operations
+
+responses:
+  400:
+    description: Bad request
+    body:
+      application/vnd.api+json:
+        
+       example: !include ../../examples/errors/bad-request-response.json
+  401:
+    description: Unauthorised request
+    body:
+      application/json:
+
+        example: !include ../../examples/errors/unauthorised-response.json
+  403:
+    description: Forbidden
+    body:
+      application/json:
+        
+        example: !include ../../examples/errors/forbidden-response.json
+  404:
+    description: Resource not found
+    body:
+      application/json:
+        
+        example: !include ../../examples/errors/resource-not-found-response.json
+  405:
+    description: Method not allowed
+    body:
+      application/json:
+        
+        example: !include ../../examples/errors/method-not-allowed-response.json
+  406:
+    description: Not acceptable
+    body:
+      application/json:
+        
+        example: !include ../../examples/errors/not-acceptable-response.json
+  415:
+    description: Unsupported media type
+    body:
+      application/json:
+        
+        example: !include ../../examples/errors/unsupported-media-type-response.json
+  500:
+    description: Server error
+    body:
+      application/json:
+        
+        example: !include ../../examples/errors/unexpected-error-response.json

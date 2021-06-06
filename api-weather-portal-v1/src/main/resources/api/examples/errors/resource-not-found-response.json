@@ -1,0 +1,10 @@
+{
+  "errors": [
+    {
+        "status": "404",
+        "code": "RESOURCE_NOT_FOUND",
+        "title": "Resource not found.",
+        "detail": "The requested resource was not found: `/customers/123`"
+    }
+  ]
+}

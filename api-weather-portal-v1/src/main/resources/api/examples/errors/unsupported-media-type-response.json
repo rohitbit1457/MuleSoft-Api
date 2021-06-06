@@ -1,0 +1,10 @@
+{
+  "errors": [
+    {
+        "status": "415",
+        "code": "MEDIA_TYPE_INCORRECT",
+        "title": "Invalid media type",
+        "detail": "Request media type is not supported: `application/json`"
+    }
+  ]
+}

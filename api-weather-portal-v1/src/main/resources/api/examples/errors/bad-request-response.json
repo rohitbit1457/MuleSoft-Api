@@ -1,0 +1,10 @@
+{
+  "errors": [
+    {
+        "status": "400",
+        "code": "BAD_REQUEST",
+        "title": "Bad request",
+        "detail": "The request provided was not valid"
+    }
+  ]
+}

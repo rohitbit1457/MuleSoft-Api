@@ -1,0 +1,10 @@
+{
+  "errors": [
+    {
+        "status": "405",
+        "code": "INVALID_METHOD",
+        "title": "Invalid http method",
+        "detail": "The http method requested is invalid: POST "
+    }
+  ]
+}
